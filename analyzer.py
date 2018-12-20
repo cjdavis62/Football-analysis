@@ -2,6 +2,48 @@ import sys
 import argparse
 import numpy as np
 
+class player:
+    record_of_records = []
+
+    def __init__(self, player_real, player_pseudo, player_name):
+        self.real = player_real
+        self.pseudo = player_pseudo
+        self.name = player_name
+
+    def set_pseudo(self, new_pseudo):
+        self.pseudo = new_pseudo
+
+# initialize all the players with their default values
+def get_players():
+    
+    Chris = player(0, 0, "Chris")
+    Todd = player(1, 1, "Todd")
+    Andy = player(2, 2, "Andy")
+    Greg = player(3, 3, "Greg")
+    Aaron = player(4, 4, "Aaron")
+    Robert = player(5, 5, "Robert")
+    Tyler = player(6, 6, "Tyler")
+    Stephen = player(7, 7, "Stephen")
+    Travis = player(8, 8, "Travis")
+    Mark = player(9, 9, "Mark")
+    Noel = player(10, 10, "Noel")
+    Eric = player(11, 11, "Eric")
+
+    array_of_players = np.array([Chris, Todd, Andy, Greg, Aaron, Robert, Tyler, Stephen, Travis, Mark, Noel, Eric])
+    return array_of_players
+
+# shuffle up the player's pseudo schedule
+def shuffle_player_pseudo(array_of_players):
+
+    shuffled_pseudo = np.random.permutation(12)
+    return_array = np.empty_like(array_of_players)
+    i = 0
+    for player in array_of_players:
+        player.set_pseudo(shuffled_pseudo[i])
+        return_array[i] = player
+        i = i + 1
+    return return_array
+        
 # Calculate score for win/loss/tie. Win = 1, Loss = 0, Tie = 0.5
 def win_loss_tie(scoreA, scoreB):
     if (scoreA > scoreB):
@@ -114,10 +156,4 @@ def main():
      scores = get_scores()
 
      print(calculate_rank(args.player, schedule, scores, season_length, number_of_players))
-
-
-    
-main()
-
-    
 
