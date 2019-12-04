@@ -54,12 +54,12 @@ def win_loss_tie(scoreA, scoreB):
         return 0.5
 
 # Grab the schedule from the text file
-def get_schedule():
-    return np.loadtxt("2018FantasySchedules.txt", dtype=int, delimiter="\t")
+def get_schedule(year):
+    return np.loadtxt(f"{year}FantasySchedules.txt", dtype=int, delimiter="\t")
 
 # Grab the scores from the text file
-def get_scores():
-    return np.loadtxt("2018FantasyScores.txt", dtype=float, delimiter="\t")
+def get_scores(year):
+    return np.loadtxt(f"{year}FantasyScores.txt", dtype=float, delimiter="\t")
 
 # Parse the arguments
 def parse():

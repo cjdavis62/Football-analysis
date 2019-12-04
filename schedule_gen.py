@@ -117,6 +117,7 @@ def generate_schedules(schedules_to_make, number_of_players, repeat_weeks, seaso
     list_of_good_schedules = []
     list_of_good_schedules.append(get_schedule())
     number_of_copies = 0
+    schedule_number = 0
 
     print("Generating schedules")
     for schedules in range (0, schedules_to_make):
@@ -130,8 +131,9 @@ def generate_schedules(schedules_to_make, number_of_players, repeat_weeks, seaso
                     is_good_schedule = False
                     break
             if is_good_schedule:
+                schedule_number = schedule_number + 1
                 list_of_good_schedules.append(new_schedule)
-                print("Good schedule! schedule {schedules} of {schedules_to_make} complete".format(schedules = schedules, schedules_to_make = schedules_to_make))
+                print("Good schedule #{schedule_number}! schedule {schedules} of {schedules_to_make} complete".format(schedules = schedules, schedules_to_make = schedules_to_make, schedule_number = schedule_number))
 
     #print(list_of_good_schedules)
     print("total good schedules:", len(list_of_good_schedules))

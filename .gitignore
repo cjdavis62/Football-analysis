@@ -2,4 +2,4 @@
 *.pyc
 __pycache__
 *.png
-.ipynb_checkpoints/Untitled-checkpoint.ipynb
+.ipynb_checkpoints/*
