@@ -1,8 +1,8 @@
 from analyzer import *
 import random
 
-def init_schedule():
-    schedule = get_schedule()
+def init_schedule(year):
+    schedule = get_schedule(year)
     init_schedule = np.full_like(schedule, -1)
     return init_schedule
 
@@ -13,11 +13,11 @@ def init_schedule():
 
     # in case it doesn't work, save the current schedule
     start_schedule = schedule
-    
+
     # Create schedule for a player
     list_of_available = []
     list_of_available.extend(range(player+1, number_of_players))
-        
+
     for game in range(0,season_length - repeat_games):
         if (schedule[game, player] == -1):
             print(len(list_of_available))
@@ -41,7 +41,7 @@ def init_schedule():
 
     return schedule
 """
-                    
+
 # Get an opponent in a week given that opponent cannot play another game in week
 def get_opponent(list_of_available, week, schedule):
 
@@ -63,27 +63,27 @@ def get_opponent(list_of_available, week, schedule):
     #print("opponent: ", opponent)
     weekly_list_of_available.extend(list_of_weekly_removed)
     return opponent
-            
-        
-def create_schedule(number_of_players, season_length, repeat_games):
 
-    schedule = init_schedule()
+
+def create_schedule(number_of_players, season_length, repeat_games, year):
+
+    schedule = init_schedule(year)
 
     for player in range (0, number_of_players):
 
         #print("starting player: ", player)
-        
+
         # Create schedule for a player
         list_of_available = []
         list_of_available.extend(range(player+1, number_of_players))
-        
+
         for game in range(0,season_length - repeat_games):
             if (schedule[game, player] == -1):
                 #print(len(list_of_available))
                 #print("Available list: ", list_of_available)
                 opponent = get_opponent(list_of_available, game, schedule)
                 if opponent == 0:
-                    return init_schedule()
+                    return init_schedule(year)
                 list_of_available.remove(opponent)
                 schedule[game,player] = opponent
                 #print("Schedule: ", schedule)
@@ -95,7 +95,7 @@ def create_schedule(number_of_players, season_length, repeat_games):
                 schedule[game + (season_length - repeat_games), player] = opponent
                 if (opponent > player):
                     schedule[game + (season_length - repeat_games), opponent] = player
-                
+
     return schedule
 
 def check_schedule_same(scheduleA, scheduleB, number_of_players, season_length):
@@ -111,7 +111,7 @@ def check_schedule_same(scheduleA, scheduleB, number_of_players, season_length):
 
 # Creates schedules_to_make number of schedules and returns a list of good schedules
 # For every 1k schedules, approximately 6 are good
-def generate_schedules(schedules_to_make, number_of_players, repeat_weeks, season_length):
+def generate_schedules(schedules_to_make, number_of_players, repeat_weeks, season_length, verbose):
     schedule = init_schedule()
 
     list_of_good_schedules = []
@@ -121,8 +121,8 @@ def generate_schedules(schedules_to_make, number_of_players, repeat_weeks, seaso
 
     print("Generating schedules")
     for schedules in range (0, schedules_to_make):
-        new_schedule = create_schedule(number_of_players, season_length, repeat_weeks)
-        if new_schedule.all() != init_schedule().all():
+        new_schedule = create_schedule(number_of_players, season_length, repeat_weeks, year)
+        if new_schedule.all() != init_schedule(year).all():
             # Start off assuming it's a good list. Change to False if it ends up bad
             is_good_schedule = True
             for schedule_in_list in list_of_good_schedules:
@@ -133,11 +133,11 @@ def generate_schedules(schedules_to_make, number_of_players, repeat_weeks, seaso
             if is_good_schedule:
                 schedule_number = schedule_number + 1
                 list_of_good_schedules.append(new_schedule)
-                print("Good schedule #{schedule_number}! schedule {schedules} of {schedules_to_make} complete".format(schedules = schedules, schedules_to_make = schedules_to_make, schedule_number = schedule_number))
+                if verbose:
+                    print("Good schedule #{schedule_number}! schedule {schedules} of {schedules_to_make} complete".format(schedules = schedules, schedules_to_make = schedules_to_make, schedule_number = schedule_number))
 
     #print(list_of_good_schedules)
     print("total good schedules:", len(list_of_good_schedules))
     print("number of copies deleted:", number_of_copies)
 
     return list_of_good_schedules
-
