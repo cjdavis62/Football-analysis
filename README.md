@@ -9,4 +9,5 @@ This script is run w/ python3 as:
 Where `X` is the version of python3 installed and `P` is the player code.
 You can find the code for players with the `-l` extension.
 
-Planned update: I'll update this project to be able to determine the rank of the player throughout all possible permutations of the schedule, and then plotting a histogram of their rank in each.
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/cjdavis62/Football-analysis/HEAD)
+
