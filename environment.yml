@@ -6,3 +6,6 @@ dependencies:
   - pandas
   - matplotlib
   - seaborn
+  - pip
+    - espn_api
+ 
