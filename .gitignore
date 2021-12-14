@@ -1,6 +1,9 @@
+*__init__.py
 *~
 *.pyc
 __pycache__
 *.png
 .ipynb_checkpoints/*
 espn-api/*
+*.txt
+*.xl*
